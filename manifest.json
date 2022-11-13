@@ -1,0 +1,22 @@
+{
+    "manifest_version": 2,
+    "name": "Google Meet Disable Camera",
+    "version": "1.0",
+    "description": "Freezes the camera in Google Meet.",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "meet_bypass@siegebyte.xyz"
+        }
+    },
+    "content_scripts": [
+        {
+            "run_at": "document_start",
+            "matches": [
+                "*://meet.google.com/*"
+            ],
+            "js": [
+                "injector.js"
+            ]
+        }
+    ]
+}
