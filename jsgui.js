@@ -1,5 +1,24 @@
-var currentOperation = null;
-var frame = null;
+// jsgui
+// it's like ImGui but worse
+// no idea if a project with the same name exists and I don't care
+
+var jsgui = {
+    currentOperation: null,
+    frame: null,
+    last: null,
+    nextIsInline: false
+}
+
+function drawText(ctx, text, x, y) {
+    var metrics = ctx.measureText(text)
+    var width = metrics.width
+    var height = metrics.actualBoundingBoxAscent
+    ctx.fillText(text, x - width / 2, y + height / 2)
+}
+
+function drawRect(ctx, x, y, w, h) {
+    ctx.fillRect(x - w / 2, y - h / 2, w, h)
+}
 
 function dragElement(elmnt, header) {   
     var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
@@ -31,12 +50,12 @@ function dragElement(elmnt, header) {
 }
 
 function beginWindow(name) {
-    if (currentOperation != null) {
+    if (jsgui.currentOperation != null) {
         console.error("Error: beginWindow: endWindow not called before beginning a new one!")
     }
 
-    frame = document.createElement("div")
-    frame.style = "position: absolute; left: 50px; top: 50px; background-color: #202020; color: #ffffff; padding: 0px; font-family:monospace;"
+    jsgui.frame = document.createElement("div")
+    jsgui.frame.style = "position: absolute; left: 50px; top: 50px; background-color: #202020; color: #ffffff; padding: 0px; font-family:monospace;"
     var elements = document.getElementsByTagName("*");
     var highest_index = 0;
 
@@ -45,45 +64,74 @@ function beginWindow(name) {
             highest_index = parseInt(elements[i].style.zIndex)
         }
     }
-    frame.style.zIndex = highest_index + 1
+    jsgui.frame.style.zIndex = highest_index + 1
 
-    currentOperation = document.createElement("div")
-    currentOperation.style = "background-color: #202020; color: #ffffff; padding: 10px"
+    jsgui.currentOperation = document.createElement("div")
+    jsgui.currentOperation.style = "background-color: #202020; color: #ffffff; padding: 10px"
 
     var header = document.createElement("div")
     header.style = "background-color: #064c88; color: #ffffff; padding: 10px; font-family:monospace;"
     header.innerHTML = name
-    dragElement(frame, header)
-    frame.appendChild(header)
-    frame.appendChild(currentOperation)
+    dragElement(jsgui.frame, header)
+    jsgui.frame.appendChild(header)
+    jsgui.frame.appendChild(jsgui.currentOperation)
+}
+
+function inlineCheck(element) {
+    if (jsgui.nextIsInline) {
+        element.style.display = "inline"
+        jsgui.nextIsInline = false
+    }
+    return element
 }
 
 //Adds some text to the current window.
 function label(text) {
-    var label = document.createElement("p")
+    var label = inlineCheck(document.createElement("p"))
     label.innerHTML = text
-    currentOperation.appendChild(label)
+    jsgui.currentOperation.appendChild(label)
+    jsgui.last = label
+    return label
 }
 
-function checkbox(text) {
-    var box = document.createElement("input")
+function textArea(id) {
+    var area = inlineCheck(document.createElement("textarea"))
+    area.id = id
+    jsgui.currentOperation.appendChild(area)
+    jsgui.last = area
+    return area
+}
+
+function checkbox(id) {
+    var box = inlineCheck(document.createElement("input"))
     box.type = "checkbox"
-    box.id = text
-    currentOperation.appendChild(box)
+    box.id = id
+    jsgui.currentOperation.appendChild(box)
+    jsgui.last = box
     return checkbox
 } 
 
+function lineBreak() {
+    jsgui.currentOperation.appendChild(document.createElement("p"))
+}
+
+function sameLine() {
+    jsgui.nextIsInline = true
+}
+
 //Allows you to add a custom HTML5 element.
 function customElement(element) {
-    currentOperation.appendChild(element)
+    jsgui.currentOperation.appendChild(inlineCheck(element))
+    jsgui.last = element
 }
 
 function endWindow() {
-    if (currentOperation == null) {
+    if (jsgui.currentOperation == null) {
         console.error("Error: endWindow: not creating a window")
     }
     
-    document.body.appendChild(frame)
-    currentOperation = null;
-    frame = null;
+    document.body.appendChild(jsgui.frame)
+    jsgui.currentOperation = null;
+    jsgui.frame = null;
+    jsgui.last = null
 }
