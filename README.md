@@ -10,3 +10,9 @@ Invert colors
 Text overlay
 
 Everything may appear inverted horizontally, but other people will see it normally.
+
+On Linux, clone this repository, cd into it and then run
+
+zip -r -FS ../googlemeet.zip * --exclude '*.git*'
+
+to pack the files into an extension. Then add it as any other unsigned addon.
