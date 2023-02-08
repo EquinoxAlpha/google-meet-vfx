@@ -7,5 +7,4 @@ function injectScript(contents) {
     (document.head || document.documentElement).appendChild(script);
 }
 
-injectScript("jsgui.js");
-injectScript("usermedia_hook.js");
+injectScript("main.js");
