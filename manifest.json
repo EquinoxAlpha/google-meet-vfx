@@ -1,11 +1,11 @@
 {
     "manifest_version": 2,
-    "name": "Google Meet Disable Camera",
-    "version": "1.0",
-    "description": "Freezes the camera in Google Meet.",
+    "name": "Google Meet Visual Effects",
+    "version": "1.1",
+    "description": "Adds some extra options to Google Meet.",
     "browser_specific_settings": {
         "gecko": {
-            "id": "meet_bypass@siegebyte.xyz"
+            "id": "g_meet_vfx@siegebyte.xyz"
         }
     },
     "content_scripts": [
