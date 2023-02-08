@@ -23,6 +23,9 @@ zip -r -FS google-meet-vfx.zip * --exclude '*.git*' '*.md'
 ```
 to pack the files into an extension. Then add it as any other unsigned addon.
 
+## Images
+![image](https://user-images.githubusercontent.com/93602271/217653790-12aa22b1-5a0a-49a4-99a0-5d870f6d060d.png)
+
 ## Known issues
 The camera output (& overlay) may appear inverted horizontally, but other people will see it normally. Didn't test this on other machines.
 
