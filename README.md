@@ -19,7 +19,7 @@ On Linux, run
 ```bash
 git clone https://github.com/EquinoxAlpha/google-meet-vfx.git
 cd google-meet-vfx
-zip -r -FS google-meet-vfx.zip src/* --exclude '*.git*' '*.md'
+zip -r -FS google-meet-vfx.zip * --exclude '*.git*' '*.md'
 ```
 to pack the files into an extension. Then add it as any other unsigned addon.
 
