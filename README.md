@@ -12,6 +12,7 @@ Visual effects planned:
 * Custom image uploading
 
 This extension is untested on Chromium-based browsers.
+This should theoretically work with any video calling service, you can try it by editing the manifest file.
 
 ## Installing
 On Linux, run
