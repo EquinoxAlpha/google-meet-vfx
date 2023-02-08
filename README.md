@@ -37,6 +37,3 @@ If you want to make your own version of this extension, this might be useful:
 * Then initialize a media stream of the canvas element, then call the function that loads our GUI and a draw loop.
 * After all of that is done that, return the media stream of the canvas element.
 * The draw loop repeatedly draws the actual video stream on the canvas and stops/plays the video stream depending on the current settings, then applies effects such as invert colors or overlay text.
-
-## License
-The Unlicense. Do whatever you want with this public domain project.
